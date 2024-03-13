@@ -1,0 +1,37 @@
+#include<avr/io.h>
+#include<avr/interrupt.h>
+
+int main(void)
+{
+  DDRB=0xFF;
+  UDR0='p';
+  UBRR0=0x67;
+  UCSR0A=0x00;
+  UCSR0B=0xD8;
+  UCSR0C=0x06;
+  PORTB=0x00; 
+
+  sei();
+  while(1)
+  {
+
+  }
+
+}
+
+ISR((USART_TX_vect))
+{
+  UDR0='G';
+}
+
+ISR((USART_RX_vect))
+{
+  if(UDR0=='A')
+  {
+  PORTB=0xFF;
+  }
+  else if(UDR0=='B')
+   {
+  PORTB=0x00;
+  }
+}
