@@ -1,51 +1,48 @@
+#include<avr/interrupt.h>  // Include interrupt handling functions
+#include<avr/io.h>         // Include AVR I/O definitions
 
-#include<avr/interrupt.h>
-#include<avr/io.h>
-char x[5]={"VNSGU"};
-char y[5]={"  INDIA"};
-char a,b;
-int i=0,j;
+char x[5]={"VNSGU"};       // Define character array 'x' with the string "VNSGU"
+char y[5]={"  INDIA"};     // Define character array 'y' with the string "  INDIA"
+char a,b;                  // Define variables 'a' and 'b' of type char
+int i=0,j;                  // Initialize variables 'i' and 'j' to 0
+
 void setup() {
   // put your setup code here, to run once:
-  DDRB=0x20;
-  UCSR0A=0x00;
-  UCSR0B=0xD8;
-  UBRR0=0x67;
-  //UDR0=x;
-  i=0;
-  j=0;
+  DDRB=0x20;                // Set pin PB5 (pin 13 on Arduino Uno) as an output pin
+  UCSR0A=0x00;              // Configure control and status register A for UART
+  UCSR0B=0xD8;              // Configure control and status register B for UART
+  UBRR0=0x67;               // Set baud rate for UART communication
+  //UDR0=x;                 // Transmit the characters of array 'x' via UART (not used in this code)
+  i=0;                      // Initialize variable 'i' to 0
+  j=0;                      // Initialize variable 'j' to 0
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-   //UDR0=a;
-   
-  if(a=='f')
-  {
-    for(i;i<5;i++)
-    {
-      UDR0=x[i];
-      delay(1000);
+   //UDR0=a;                // Transmit character 'a' via UART (commented out, not used in this code)
+
+  if(a=='f') {
+    for(i;i<5;i++) {       // Loop through the characters of array 'x'
+      UDR0=x[i];           // Transmit the current character of array 'x' via UART
+      delay(1000);         // Delay for 1000 milliseconds
     }
   }
-  if(a=='r')
-  {
-    for(j;j<5;j++)
-    {
-      UDR0=y[j];
-      delay(1000);
+  if(a=='r') {
+    for(j;j<5;j++) {       // Loop through the characters of array 'y'
+      UDR0=y[j];           // Transmit the current character of array 'y' via UART
+      delay(1000);         // Delay for 1000 milliseconds
     }
   }
   
 }
-ISR(USART_TX_vect)
-{
- 
+
+ISR(USART_TX_vect) {
+  // Interrupt Service Routine (not implemented in this code)
 }
-ISR(USART_RX_vect)
-{
-   
- a=UDR0;
- i=0;
- j=0;
+
+ISR(USART_RX_vect) {
+  // Interrupt Service Routine
+  a=UDR0;                  // Read the received character from UART and store it in variable 'a'
+  i=0;                     // Reset variable 'i' to 0
+  j=0;                     // Reset variable 'j' to 0
 }
