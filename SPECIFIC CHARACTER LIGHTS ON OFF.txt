@@ -1,37 +1,37 @@
-#include<avr/io.h>
-#include<avr/interrupt.h>
+#include <avr/io.h>          // Include AVR I/O definitions
+#include <avr/interrupt.h>   // Include interrupt handling functions
 
 int main(void)
 {
-  DDRB=0xFF;
-  UDR0='p';
-  UBRR0=0x67;
-  UCSR0A=0x00;
-  UCSR0B=0xD8;
-  UCSR0C=0x06;
-  PORTB=0x00; 
+  DDRB = 0xFF;              // Set all pins of port B as output
+  UDR0 = 'p';               // Transmit the character 'p' via UART
+  UBRR0 = 0x67;             // Set baud rate for UART communication
+  UCSR0A = 0x00;            // Configure control and status register A for UART
+  UCSR0B = 0xD8;            // Configure control and status register B for UART
+  UCSR0C = 0x06;            // Configure control and status register C for UART
+  PORTB = 0x00;             // Set all pins of port B to low (initially off)
 
-  sei();
+  sei();                    // Enable global interrupts
+
   while(1)
   {
-
+    // Infinite loop, program execution stays here
   }
-
 }
 
-ISR((USART_TX_vect))
+ISR((USART_TX_vect))        // USART Transmit Interrupt Service Routine
 {
-  UDR0='G';
+  UDR0 = 'G';               // Transmit the character 'G' via UART
 }
 
-ISR((USART_RX_vect))
+ISR((USART_RX_vect))        // USART Receive Interrupt Service Routine
 {
-  if(UDR0=='A')
+  if (UDR0 == 'A')          // Check if received character is 'A'
   {
-  PORTB=0xFF;
+    PORTB = 0xFF;           // Set all pins of port B to high (turn on LEDs)
   }
-  else if(UDR0=='B')
-   {
-  PORTB=0x00;
+  else if (UDR0 == 'B')     // Check if received character is 'B'
+  {
+    PORTB = 0x00;           // Set all pins of port B to low (turn off LEDs)
   }
 }
