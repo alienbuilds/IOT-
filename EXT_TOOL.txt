@@ -1,0 +1,7 @@
+COMMAND
+
+C:\Users\np290\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\bin\avrdude.exe
+
+ARGUMENT
+
+-C "C:\Users\np290\AppData\Local\Arduino15\packages\arduino\tools\avrdude\6.3.0-arduino17\etc\avrdude.conf" -v -patmega328p -carduino -PCOM3 -b115200 -D -Uflash:w:"$(ItemDir)$(ItemFileName).hex":i
